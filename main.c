@@ -12,21 +12,24 @@ int main() {
     int i;
     float suma = 0;
     int mejorIndex = 0;
+    char buffer[100];
 
     // Capturar datos
     for (i = 0; i < 3; i++) {
         printf("\nEstudiante %d\n", i + 1);
 
         printf("Nombre: ");
+        while (getchar() != '\n'); 
         fgets(estudiantes[i].nombre, 50, stdin);
 
         printf("Edad: ");
-        scanf("%d", &estudiantes[i].edad);
+        fgets(buffer, 100, stdin);
+        sscanf(buffer, "%d", &estudiantes[i].edad);
 
         printf("Promedio: ");
-        scanf("%f", &estudiantes[i].promedio);
-
-        getchar();
+        fgets(buffer, 100, stdin);
+        sscanf(buffer, "%f", &estudiantes[i].promedio);
+        
         suma += estudiantes[i].promedio;
 
         if (estudiantes[i].promedio > estudiantes[mejorIndex].promedio) {
@@ -50,8 +53,8 @@ int main() {
     archivo = fopen("estudiantes.txt", "r");
     if (archivo != NULL) {
         for (i = 0; i < 3; i++) {
+            fgets(cargados[i].nombre, 50, archivo);
             fscanf(archivo, "%49s %d %f",
-                cargados[i].nombre,
                 &cargados[i].edad,
                 &cargados[i].promedio);
         }
